@@ -1,0 +1,96 @@
+# ============================================================
+# Configuration for Off-Road Accident Video Generation
+# Paper: Video Generation of Sudden Off-Road Accidents
+#        by World Models for Autonomous Driving (ACCV 2026)
+# ============================================================
+
+model:
+  # --- Scene Encoder ---
+  scene_encoder:
+    visual_backbone: "resnet18"        # Pretrained ResNet-18
+    visual_feat_dim: 512               # ResNet-18 output channels
+    temporal_hidden_dim: 256           # Temporal Transformer hidden dim
+    temporal_num_heads: 8
+    temporal_num_layers: 4
+    temporal_dropout: 0.1
+
+    vehicle_state_dim: 8               # speed, 3D accel, yaw, roll, slip rate
+    terrain_semantic_dim: 16           # terrain type, friction, slope, etc.
+    unified_latent_dim: 512            # Final unified latent dim
+
+  # --- World Dynamics ---
+  world_dynamics:
+    latent_dim: 512
+    terrain_phys_dim: 8                # friction, slope, loose degree, elevation, etc.
+    transformer_num_layers: 6
+    transformer_num_heads: 8
+    dropout: 0.1
+    prediction_horizon: 16             # Number of future frames to predict
+
+  # --- Accident Controller ---
+  accident_controller:
+    control_vector_dim: 6              # type, trigger_frame, spatial_range,
+                                        # friction_attenuation, collapse_slope, obstacle_size
+    latent_dim: 512
+    num_accident_types: 4              # animal_intrusion, rockfall, terrain_collapse, sudden_skidding
+
+    # Friction mutation params (for sudden skidding)
+    friction_mu0_range: [0.2, 0.8]     # Original friction coefficient range
+    friction_atten_range: [0.1, 0.5]   # Attenuation ratio range
+
+  # --- Diffusion Decoder ---
+  diffusion_decoder:
+    # Use pretrained Stable Video Diffusion as backbone
+    pretrained_model: "stabilityai/stable-video-diffusion-img2vid"
+    latent_dim: 512
+    num_inference_steps: 50
+    guidance_scale: 7.5
+    optical_flow_weight: 0.3           # Weight for optical flow guidance
+    output_fps: 10                     # Match dataset frame rate
+
+data:
+  num_views: 6                         # front, front-left, front-right, rear, rear-left, rear-right
+  image_size: [540, 960]               # H x W
+  frame_rate: 10                       # Hz
+  temporal_window: 16                  # Input frames
+  prediction_length: 16                # Output frames
+  aux_data:
+    - vehicle_speed
+    - acceleration_3d
+    - yaw_angle
+    - roll_angle
+    - wheel_slip_rate
+    - terrain_friction
+    - slope_elevation
+    - lidar_depth
+
+training:
+  batch_size: 1                        # Small for inference; train uses 8+ GPUs
+  learning_rate: 1.0e-4
+  epochs: 120
+  lr_scheduler: "cosine"
+  loss_weights:
+    lambda_rec: 1.0
+    lambda_temp: 0.6
+    lambda_phys: 0.8
+    lambda_adv: 0.3
+    lambda_reg: 0.5
+
+accident_types:
+  - name: "animal_intrusion"
+    id: 0
+    description: "Animal suddenly enters driving path"
+  - name: "rockfall"
+    id: 1
+    description: "Rocks falling from slope onto vehicle path"
+  - name: "terrain_collapse"
+    id: 2
+    description: "Ground collapses beneath or ahead of vehicle"
+  - name: "sudden_skidding"
+    id: 3
+    description: "Sudden loss of traction due to friction change"
+
+paths:
+  output_dir: "./outputs"
+  checkpoint_dir: "./checkpoints"
+  log_dir: "./logs"
