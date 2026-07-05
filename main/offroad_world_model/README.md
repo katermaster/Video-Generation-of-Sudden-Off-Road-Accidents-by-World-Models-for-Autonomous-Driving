@@ -1,6 +1,5 @@
 # Off-Road Sudden Accident Video Generation by World Models
-
-复现 ACCV 2026 Paper #41: **Video Generation of Sudden Off-Road Accidents by World Models for Autonomous Driving**
+ACCV 2026 Paper #41: **Video Generation of Sudden Off-Road Accidents by World Models for Autonomous Driving**
 
 ## 项目结构
 
