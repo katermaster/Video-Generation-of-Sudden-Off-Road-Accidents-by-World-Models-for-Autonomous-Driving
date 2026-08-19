@@ -1,16 +1,3 @@
-"""
-Optical-Flow Guided Diffusion Video Decoder (Section 3.3)
-
-Converts conditional latent states z_cond into high-fidelity accident videos.
-
-Key equations:
-  (7) Forward diffusion:  z_s = √(ᾱ_s)·z_0 + √(1-ᾱ_s)·ε,  ε ~ N(0,I)
-  (8) Reverse denoising:  z_{s-1} = 1/√α_s · [z_s - ((1-α_s)/√(1-ᾱ_s))·ε_θ(z_s, s, Z_pred, C)]
-                           + σ_s·ε
-
-For pretrained mode, uses Stable Video Diffusion (SVD) as the decoder backbone,
-with optical flow guidance for temporal consistency.
-"""
 
 import math
 from typing import Optional, Dict, Union
