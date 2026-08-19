@@ -1,21 +1,3 @@
-"""
-Sudden Accident Condition Controller (Section 3.3)
-
-Implements controllable triggering and physical evolution of four typical
-off-road sudden accidents:
-
-  1. Animal Intrusion  - Dynamic obstacle suddenly enters scene
-  2. Rockfall           - Rocks falling from slopes onto vehicle path
-  3. Terrain Collapse   - Ground collapses beneath/ahead of vehicle
-  4. Sudden Skidding    - Friction mutation causes loss of traction
-
-Key equations:
-  (5)  z_t^cond = z_t + W_c · C + b_c,    ∀ t ≥ t_trigger
-  (6)  μ_t = μ_0 - μ_rate · I(p_ego ∈ S_μ)   [skidding physics]
-
-Accident control vector C ∈ R^6:
-  [accident_type, trigger_frame, spatial_range, friction_atten, collapse_slope, obstacle_size]
-"""
 
 import torch
 import torch.nn as nn
