@@ -1,7 +1,3 @@
-"""
-Demo utilities for creating test inputs without a real dataset.
-Generates synthetic multi-view driving scenes for pipeline testing.
-"""
 
 import torch
 import numpy as np
