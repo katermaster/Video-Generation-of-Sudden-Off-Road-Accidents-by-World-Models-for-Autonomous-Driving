@@ -18,8 +18,6 @@ Usage:
     # Load checkpoint
     python inference.py --checkpoint path/to/checkpoint.pth --demo
 
-Paper: Video Generation of Sudden Off-Road Accidents by World Models
-       for Autonomous Driving (ACCV 2026, Paper #41)
 """
 
 import os
