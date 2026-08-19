@@ -1,8 +1,3 @@
-# ============================================================
-# Configuration for Off-Road Accident Video Generation
-# Paper: Video Generation of Sudden Off-Road Accidents
-#        by World Models for Autonomous Driving (ACCV 2026)
-# ============================================================
 
 model:
   # --- Scene Encoder ---
