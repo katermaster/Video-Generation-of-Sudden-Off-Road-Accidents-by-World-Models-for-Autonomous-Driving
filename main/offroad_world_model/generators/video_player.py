@@ -24,16 +24,6 @@ import numpy as np
 
 
 class VideoPlayer:
-    """
-    A tkinter-based video player window for displaying generated accident videos.
-
-    Usage:
-        player = VideoPlayer("path/to/video.mp4", title="Sudden Skidding Accident")
-        player.play()  # Blocks until window is closed
-
-        # Or non-blocking:
-        player.play(blocking=False)
-    """
 
     def __init__(
         self,
