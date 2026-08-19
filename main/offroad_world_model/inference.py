@@ -1,24 +1,5 @@
 #!/usr/bin/env python3
-"""
-Inference script for Off-Road Sudden Accident Video Generation.
 
-Usage:
-    # Quick demo with synthetic scene
-    python inference.py --demo
-
-    # Generate specific accident type
-    python inference.py --demo --accident_type sudden_skidding
-    python inference.py --demo --accident_type animal_intrusion
-    python inference.py --demo --accident_type rockfall
-    python inference.py --demo --accident_type terrain_collapse
-
-    # Use a real image as conditioning frame
-    python inference.py --conditioning_image path/to/offroad_scene.jpg
-
-    # Load checkpoint
-    python inference.py --checkpoint path/to/checkpoint.pth --demo
-
-"""
 
 import os
 import sys
